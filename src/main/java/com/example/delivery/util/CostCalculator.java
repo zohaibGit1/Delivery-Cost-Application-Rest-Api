@@ -63,7 +63,7 @@ public class CostCalculator {
             itemCounts.put("D", itemCounts.get("D") - 1);
         }
 
-        // Fallback for remaining items if needed (optional default price)
+
         for (Map.Entry<String, Integer> entry : itemCounts.entrySet()) {
             totalCost += entry.getValue() * getDefaultUnitPrice(entry.getKey());
         }
@@ -72,8 +72,6 @@ public class CostCalculator {
     }
 
     private static int getDefaultUnitPrice(String product) {
-        // Optional: Define fallback prices (in case any item doesn't fit in bundle)
-        // Or just return 0 if you want to ignore unbundled items
         return 0;
     }
 }

@@ -21,7 +21,6 @@ public class DeliveryController {
     private DeliveryService deliveryService;
 
     @PostMapping("/calculate-delivery-cost")
- /*   @PostMapping("/calculate-delivery-cost")*/
     public ResponseEntity<Integer> calculateDeliveryCost(@RequestBody Map<String, Integer> products) {
         if (products.isEmpty() || products.values().stream().allMatch(qty -> qty == null || qty <= 0)) {
             return ResponseEntity.badRequest().build();
