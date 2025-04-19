@@ -1,14 +1,13 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-slim
-
-# Set the working directory in the container
+# Stage 1: Build the app using Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Copy the jar file from the target folder into the container
-COPY target/delivery-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose the port your app runs on
+# Stage 2: Run the built jar with OpenJDK
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/delivery-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 9090
-
-# Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]
